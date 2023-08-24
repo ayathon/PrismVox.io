@@ -195,7 +195,7 @@ contract Prismvox is Initializable, PausableUpgradeable, UUPSUpgradeable {
         voted[_voter] = true;
         candidates[_candidateId].voteCount++;
 
-        emit VoteForCandidate(_candidateId, candidates[_candidateId].voteCount);
+        emit VoteForCandidate(msg.sender, block.timestamp, uint256 _candidateId);
     }
 
     ///@notice internal function to add candidate to election
@@ -352,7 +352,7 @@ contract Prismvox is Initializable, PausableUpgradeable, UUPSUpgradeable {
     ///@notice event to emit when candidate has been created
     event CandidateCreated(uint256 _candidateId, string _candidateName);
     ///@notice event to emit when a candidate us voted for
-    event VoteForCandidate(uint256 _candidateId, uint256 _candidateVoteCount);
+    event VoteForCandidate(address from, uint16 time, uint256 _candidateId);
 
     ///@notice error message to be caught when conditions aren't fufilled
     error ElectionNotStarted();
