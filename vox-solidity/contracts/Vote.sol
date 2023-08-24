@@ -124,7 +124,9 @@ contract Prismvox is Initializable, PausableUpgradeable, UUPSUpgradeable {
      
 
     // Candidate registration ==> Felix
-
+    function candidateRegistrar() {
+        
+    }
 
     ///@notice function that allows stakeholders vote in an election
     ///@param _candidateId the ID of the candidate and hexProof of the voting address
