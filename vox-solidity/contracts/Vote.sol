@@ -34,8 +34,9 @@ contract Prismvox is Initializable, PausableUpgradeable, UUPSUpgradeable {
 
     /// =================== VARIABLES ================================
 
-    ///@notice address 
-    address public admin;
+   
+    ///@notice address of chairman
+    address public chairman;
 
     ///@notice name of the position candidates are vying for
     string public position;
@@ -123,9 +124,9 @@ contract Prismvox is Initializable, PausableUpgradeable, UUPSUpgradeable {
         override
     {}
 
-    function getCandidates(uint _electionId) public view  returns (Candidate[] memory) {
+    function getCandidates(uint256 _electionId) public view  returns (Candidate[] memory) {
         Candidate[] memory contestants = new Candidate[] (candidatesCount);
-        for(uint i=0; i < candidatesCount; i++){
+        for(uint256 i=0; i < candidatesCount; i++){
             if(candidates[i + 1].electionId == _electionId)
            { Candidate storage candidate = candidates[i];
             contestants[i] = candidate;}
@@ -189,13 +190,13 @@ contract Prismvox is Initializable, PausableUpgradeable, UUPSUpgradeable {
         );
 
         _vote(_candidateId, msg.sender);
-        emit VoteForCandidate(msg.sender, block.timestamp, uint256 _candidateId);
+        emit VoteForCandidate(msg.sender, block.timestamp, _candidateId);
     }
 
     /// @notice function to start an election
-    ///@param _prop which is an array of election information
+    ///@param _startTime of the election
 
-    function startElection(uint256 _startTime, uint256 _endTime) external onlyOwner {
+    function startElection(uint256 _startTime, uint256 _endTime) external onlyChairman {
         require(!isElectionActive, "Election is already active");
         require(_startTime >= block.timestamp, "Start time must be in the future");
         require(_endTime > _startTime, "End time must be after start time");
@@ -386,6 +387,11 @@ contract Prismvox is Initializable, PausableUpgradeable, UUPSUpgradeable {
             "Invalid candidate to Vote!"
         );
         _;
+    }
+
+    modifier onlyRegisteredVoter {
+       require( voters[msg.sender].isRegistered, "You are not a registered voter");
+       _;
     }
 
     ///======================= EVENTS & ERRORS ==============================
