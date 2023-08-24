@@ -87,6 +87,9 @@ contract Prismvox is Initializable, PausableUpgradeable, UUPSUpgradeable {
 
     ///@notice boolean to keep track of whether result should be public or not
     bool internal publicState;
+    mapping(address => Voter) public voters;
+    Election public currentElection;
+    
 
     ///@dev struct of candidates with variables to track name , id and voteCount
     struct Candidate {
@@ -97,6 +100,19 @@ contract Prismvox is Initializable, PausableUpgradeable, UUPSUpgradeable {
         string candidateManifesto;
         uint256 voteCount;
     }
+    struct Voter {
+        string firstName;
+        string lastName;
+        uint256 dateOfBirth;
+        bool isRegistered;
+        bool isIDVerified;
+    }
+    struct Election {
+        uint256 startTime;
+        uint256 endTime;
+        bool isActive;
+    }
+  
 
     
     ///================== PUBLIC FUNCTIONS =============================
@@ -121,8 +137,39 @@ contract Prismvox is Initializable, PausableUpgradeable, UUPSUpgradeable {
     //To do..
 
     //voter registration ==> Yinka
-     
+     function registerVoter(string memory _firstName, string memory _lastName, uint256 _dateOfBirth) external {
+        require(!voters[msg.sender].isRegistered, "You are already a registered voter");
+        voters[msg.sender] = Voter({
+            firstName: _firstName,
+            lastName: _lastName,
+            dateOfBirth: _dateOfBirth,
+            isRegistered: true,
+            isIDVerified: false
+        });
 
+        emit VoterRegistered(msg.sender);
+    }
+    function verifyID() external onlyRegisteredVoter {
+        bool isVerified = simulateIDVerification(msg.sender);
+        require(isVerified, "ID verification failed");
+
+        voters[msg.sender].isIDVerified = true;
+    }
+     function startElection(uint256 _startTime, uint256 _endTime) public {
+        require(!currentElection.isActive, "Election is already active");
+        require(_startTime >= block.timestamp, "Start time must be in the future");
+        require(_endTime > _startTime, "End time must be after start time");
+
+        currentElection = Election({
+            startTime: _startTime,
+            endTime: _endTime,
+            isActive: true
+        });
+
+        emit ElectionStarted(_startTime, _endTime);
+    }
+     
+     
     // Candidate registration ==> Felix
     function candidateRegistrar() {
         
@@ -147,22 +194,15 @@ contract Prismvox is Initializable, PausableUpgradeable, UUPSUpgradeable {
 
     /// @notice function to start an election
     ///@param _prop which is an array of election information
-    function setUpElection(string[] memory _prop)
-        public
-        whenNotPaused
-    {
-        require(!Active, "Election is Ongoing");
-        require(_prop.length > 0, "atleast one person should contest");
-        require(
-            chairman == msg.sender || teachers[msg.sender] == true,
-            "only teachers/chairman can call this function"
-        );
-        
 
-        position = _prop[0];
-        description = _prop[1];
-        Created = true;
-        electionCount++;
+    function startElection(uint256 _startTime, uint256 _endTime) external onlyOwner {
+        require(!isElectionActive, "Election is already active");
+        require(_startTime >= block.timestamp, "Start time must be in the future");
+        require(_endTime > _startTime, "End time must be after start time");
+        
+        startTime = _startTime;
+        endTime = _endTime;
+        isElectionActive = true;
     }
 
     function makeResultPublic()
