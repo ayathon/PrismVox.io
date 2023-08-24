@@ -1,7 +1,7 @@
 # PrismVox Dapp
 
 <p align="center" width="100%">
-  <img src="https://github.com/ayathon/PrismVox.io/assets/58889001/d14c2ef9-0095-4163-8e23-78a46689b955" alt="site"/>
+  <img src="https://github.com/ayathon/PrismVox.io/assets/58889001/d53f821d-f3fb-4753-9f08-8b379111b797" alt="site"/>
 </p>
 
 > ## Table of contents
