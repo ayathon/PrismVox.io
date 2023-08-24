@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.grad-text{
+    background: var(--grad, linear-gradient(90deg, #F4AB5C 0%, #F962A0 52.08%, #FCF3C4 100%));
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-feature-settings: 'salt' on;
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 99.023%;
+        /* text-transform: capitalize; */
+}
