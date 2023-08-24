@@ -140,6 +140,7 @@ contract Prismvox is Initializable, PausableUpgradeable, UUPSUpgradeable {
         );
 
         _vote(_candidateId, msg.sender);
+        emit VoteForCandidate(msg.sender, block.timestamp, uint256 _candidateId);
     }
 
     /// @notice function to start an election
@@ -195,7 +196,6 @@ contract Prismvox is Initializable, PausableUpgradeable, UUPSUpgradeable {
         voted[_voter] = true;
         candidates[_candidateId].voteCount++;
 
-        emit VoteForCandidate(msg.sender, block.timestamp, uint256 _candidateId);
     }
 
     ///@notice internal function to add candidate to election
