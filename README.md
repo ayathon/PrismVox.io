@@ -22,7 +22,7 @@
   - [Install Dependencies](#install-dependencies)
   - [Steps to host the live site on Vercel](#steps-to-host-the-live-site-on-vercel)
 - [Testing the Smartcontract](#testing-the-smartcontract)
-- [ZuriSchool Contract Address](#zurischool-contract-address)
+- [PrismVox Contract Address](#PrismVox-contract-address)
 - [Live Link](#live-link)
 - [Contributors](#contributors)
 - [Contributing to the project](#contributing-to-the-project)
@@ -39,12 +39,6 @@
 `Deployment on a faster network`
 - Deployment on polygon for speed, gas fees & optimization.
 
-`Upload Stakeholders & mint`
-
-- Batch upload stakeholder addresses and assign each address with a role on upload.
-- A certain amount of tokens are minted during upload depending on the role of the stakeholders.
-- Ability to restrict the voting power of stakeholders to only those who have a token.
-- The tokens represent the voting weight with the super admin having the highest voting weight of 4 and the participant having the least voting weight of 1.
 
 
 
