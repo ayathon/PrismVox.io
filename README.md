@@ -32,6 +32,9 @@
  Welcome to PrismVox — where every voice shines brightly. Designed for DAOs, communities, and all seeking democratic innovation. 
 </p>
 
+> ## Usecase for this project
+<p align="justify">
+PrismVox as an organization needs to setup an election for leadership position in its school. The major stakeholders here are the school board of directors, the teachers and the students.
 
 #
 > ## Core Features Implemented
@@ -43,25 +46,26 @@
 
 
 `Setup elections and compile votes`
+- Stakeholders should be able to vote.
+- Stakeholders should have access control.
+- Only the chairman and teachers can setup and compile results.
+- Only the chairman can enable and disable the vote.
+- Students can only see results after they have been made public
 - Restrict the power to set up and compile votes to only the super admin and stakeholders.
 - Ability to set up multiple elections at the same time.
-- Restrict the ability for anyone who isn't a stakeholder to vote.
+- Restrict the ability for anyone who isn't a student to vote.
 - Ability for eligible stakeholders to vote for candidates in different election categories simultaneously.
-- Ability to limit stakeholders from voting in specific elections, for example stakeholdern can't vote in an election for board of directors.
-- Ability to register candidates to contest for specific roles.
-- Restrict stakeholders from voting multiple times for different candidates in the same category.
+- Restrict students from voting multiple times for different candidates in the same category.
 - Check to prevent users from voting for a candidate that doesn't exist for that category.
-- Ability for stakeholder to view history of past elections.
-- Ability for the superadmin to view the election queue.
 - Restrict the start and end of a voting session to only the super admin.
 - Ability to compile votes for different election categories.
 - Ability for the super admin, and directors to make the election results public.
-- Restrict the ability of the stakeholder to view the election results until it is made public.
+
 
 
 
 `Security`
-- Ability for the superadmin to pause and unpause the contract for security reasons. 
+- Ability for the Chairman to pause and unpause the contract for security reasons. 
 - If there's a vulnerability or a security breach, the contract functionality can be paused so the vulnerability can't be abused until the problem has been resolved.
 
 `Test Coverage`
