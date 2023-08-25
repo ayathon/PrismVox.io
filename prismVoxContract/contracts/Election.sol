@@ -127,5 +127,6 @@ contract prismVox{
 
         emit WinnerAnnounced(candidates[winningCandidateIndex].firstName, candidates[winningCandidateIndex].lastName);
     }
+    
 
 }

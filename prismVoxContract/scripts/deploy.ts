@@ -11,7 +11,7 @@ async function main() {
   await election.waitForDeployment();
 
   console.log(
-    election
+    "election ",election
   );
 }
 
