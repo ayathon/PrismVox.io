@@ -1,28 +1,15 @@
 //SPDX-License-Identifier:MIT
-pragma solidity 0.8.9;
-
-//import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-//import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
-//import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
-
+pragma solidity ^0.8.9;
 
 contract prismVox{
 
-
-    
-
-   // function intialize() initializer public {
-    //    startElection(_startTime, _endTime);
-    //    __UUPSUpgradeable_init();
-     //   __Pausable_init();
-    //}
-
-    //===================>>===================>>=================>>====================>>
+    string public electionType;
+    uint256 public votingAge;
 
     struct Voter {
         string firstName;
         string lastName;
-        uint256 dateOfBirth;
+        uint256 age;
         bool isRegistered;
         bool isIDVerified;
     }
@@ -30,7 +17,7 @@ contract prismVox{
     struct Candidate {
         string firstName;
         string lastName;
-        uint256 dateOfBirth;
+        uint256 age;
         string description;
         string picture;
         uint256 voteCount;
@@ -62,39 +49,38 @@ contract prismVox{
     event VoteCasted(address indexed voter, string candidateFullName);
     event ElectionStarted(uint256 startTime, uint256 endTime);
     event WinnerAnnounced(string firstName, string lastName);
+      constructor(string memory electionType_, uint256 _votingAge) {
+        electionType = electionType_;
+        votingAge = _votingAge;
+    }
 
 
-    function registerVoter(string memory _firstName, string memory _lastName, uint256 _dateOfBirth) external {
+    function registerVoter(string memory _firstName, string memory _lastName, uint256 _age) external {
         require(!voters[msg.sender].isRegistered, "You are already a registered voter");
+        require(_age >= votingAge, "You are upto the voting age");
         voters[msg.sender] = Voter({
             firstName: _firstName,
             lastName: _lastName,
-            dateOfBirth: _dateOfBirth,
+            age: _age,
             isRegistered: true,
             isIDVerified: false
         });
 
         emit VoterRegistered(msg.sender);
     }
-    
-    //function verifyID(address _from) external onlyRegisteredVoter {
-    //   bool isVerified = simulateIDVerification(msg.sender,_from);
-    //    require(isVerified, "ID verification failed");
-
-    //   voters[msg.sender].isIDVerified = true;
-    //}
 
     function Candidate_reg(
         string memory _firstName,
         string memory _lastName,
-        uint256 _dateOfBirth,
+        uint256 _age,
         string memory _description,
         string memory _picture
     ) external{
+         require(_age >= votingAge, "You are upto the voting age");
         candidates.push(Candidate({
             firstName: _firstName,
             lastName: _lastName,
-            dateOfBirth: _dateOfBirth,
+            age: _age,
             description: _description,
             picture: _picture,
             voteCount: 0
@@ -142,11 +128,4 @@ contract prismVox{
         emit WinnerAnnounced(candidates[winningCandidateIndex].firstName, candidates[winningCandidateIndex].lastName);
     }
 
-   
-   // function simulateIDVerification(address _voterAddress, address _from) private returns (bool) {
-    //    if (_voterAddress == msg.sender|| _voterAddress == _from) {
-   //         return true;
-     //   }
-      //  return false;
-    //}
 }
