@@ -58,8 +58,7 @@
 - Ability for the super admin, and directors to make the election results public.
 - Restrict the ability of the stakeholder to view the election results until it is made public.
 
-`Remove super admin`
-- Ability to change the current super admin based on a consensus of above 75% vote from the board of directors.
+
 
 `Security`
 - Ability for the superadmin to pause and unpause the contract for security reasons. 
